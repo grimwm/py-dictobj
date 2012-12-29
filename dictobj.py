@@ -1,3 +1,5 @@
+import unittest
+
 class DictionaryObject(object):
   """
   A class that has all the functionality of a normal Python dictionary, except
@@ -60,21 +62,55 @@ class DictionaryObject(object):
     return len(self._items)
     
   def __iter__(self):
-    for k in self._items.keys():
-      yield k
+    return iter(self._items)
       
-  def __reversed__(self):
-    for k in reversed(self._items.keys()):
-      yield k
-
   def __repr__(self):
     return repr(self._items)
     
   def __str__(self):
     return str(self._items)
 
+  def __cmp__(self, rhs):
+    return cmp(self._items, rhs._items)
+
   def keys(self):
     return self._items.keys()
     
   def values(self):
     return self._items.values()
+
+class TestDictionaryObject(unittest.TestCase):
+  def setUp(self):
+    d = {'a':1, 'b':{'c':True, 'd':[1,2]}, 1:'x'}
+    self.vanilla = DictionaryObject(d, False)
+    self.kinky = DictionaryObject(d)
+
+  def test_len(self):
+    self.assertEqual(3, len(self.vanilla))
+    self.assertEqual(3, len(self.kinky))
+    
+  def test_iter(self):
+    keys = [1,'a','b']
+    for i,k in enumerate(sorted(self.vanilla)):
+      self.assertEqual(k, keys[i])
+    for i,k in enumerate(sorted(self.kinky)):
+      self.assertEqual(k, keys[i])
+
+  def test_getattr(self):
+    self.assertEqual(self.vanilla.a, 1)
+    self.assertEqual(self.vanilla.b, {'c':True, 'd':[1,2]})
+    
+    self.assertEqual(self.kinky.a, 1)
+    self.assertEqual(self.kinky.b, DictionaryObject({'c':True, 'd':[1,2]}))
+
+  def test_getitem(self):
+    self.assertEqual(self.vanilla['a'], 1)
+    self.assertEqual(self.vanilla['b'], {'c':True, 'd':[1,2]})
+    self.assertEqual(self.vanilla[1], 'x')
+    
+    self.assertEqual(self.kinky['a'], 1)
+    self.assertEqual(self.kinky['b'], DictionaryObject({'c':True, 'd':[1,2]}))
+    self.assertEqual(self.kinky[1], 'x')
+
+if '__main__' == __name__:
+  unittest.main()
