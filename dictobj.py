@@ -17,11 +17,14 @@ class DictionaryObject(object):
     """
     if recursive:
       items = {}
-      for k in dictionary: items[k] = dictionary[k]
+      for k in dictionary:
+        items[k] = dictionary[k]
       for k in items:
-        if isinstance(items[k], dict): items[k] = DictionaryObject(items[k], recursive)
+        if isinstance(items[k], dict): 
+          items[k] = DictionaryObject(items[k], recursive)
       self.__dict__['_items'] = items
-    else: self.__dict__['_items'] = dictionary
+    else: 
+      self.__dict__['_items'] = dictionary
   
   def __getattr__(self, name):
     """
@@ -38,23 +41,40 @@ class DictionaryObject(object):
       d['keys'] ==> Will return value [1,2]
       d['values'] ==> Will return value 3.
     """
-    if name in self.__dict__: return self.__dict__[name]
-    if name in self._items: return self._items[name]
+    if name in self.__dict__:
+      return self.__dict__[name]
+    if name in self._items:
+      return self._items[name]
     raise AttributeError("'dict' object has no attribute '%s'" % name)
 
   def __setattr__(self, name, value):
     raise AttributeError("'dict' object has no attribute '%s'" % name)
 
-  def __getitem__(self, name): return self._items[name]
-  def __contains__(self, name): return name in self._items
-  def __len__(self): return len(self._items)
+  def __getitem__(self, name):
+    return self._items[name]
+    
+  def __contains__(self, name):
+    return name in self._items
+    
+  def __len__(self):
+    return len(self._items)
+    
   def __iter__(self):
-    for k in self._items.keys(): yield k
+    for k in self._items.keys():
+      yield k
+      
   def __reversed__(self):
-    for k in reversed(self._items.keys()): yield k
+    for k in reversed(self._items.keys()):
+      yield k
 
-  def __repr__(self): return repr(self._items)
-  def __str__(self): return str(self._items)
+  def __repr__(self):
+    return repr(self._items)
+    
+  def __str__(self):
+    return str(self._items)
 
-  def keys(self): return self._items.keys()
-  def values(self): return self._items.values()
+  def keys(self):
+    return self._items.keys()
+    
+  def values(self):
+    return self._items.values()
