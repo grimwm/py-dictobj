@@ -24,6 +24,20 @@ class DictionaryObject(object):
     else: self.__dict__['_items'] = dictionary
   
   def __getattr__(self, name):
+    """
+    This is the method that makes all the magic happen.  Obviously, for
+    certain reasons, it makes sense for "keys" matching the same name
+    as our internal methods, we want to return the methods instead of
+    the value out of the dictionary.
+
+    Example:
+      d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
+      d.keys ==> Will return DictionaryObject.keys() method
+      d.values ==> Will return DictionaryObject.values() method
+      d.x ==> Will return value 1
+      d['keys'] ==> Will return value [1,2]
+      d['values'] ==> Will return value 3.
+    """
     if name in self.__dict__: return self.__dict__[name]
     if name in self._items: return self._items[name]
     raise AttributeError("'dict' object has no attribute '%s'" % name)
