@@ -10,7 +10,10 @@ class DictionaryObject(object):
   """
   def __init__(self, dictionary=None, recursive=True):
     """
-    Take as input a dictionary-like object and create 
+    Take as input a dictionary-like object and return a DictionaryObject.
+    If recursive is True, then make sure any keys containing dictionaries
+    are also converted to DictionaryObjects.  Otherwise, leave them as vanilla
+    Python dictionaries.
     """
     if recursive:
       items = {}
