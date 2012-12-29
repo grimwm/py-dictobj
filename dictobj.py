@@ -7,8 +7,9 @@ class DictionaryObject(object):
   being able to lookup values by using keys as attributes.
   
   Example:
-    d = DictionaryObject({'a':1, 'b':True, 3:'x'})
-    print d.a, d.b, d[3] ==> 1 True x
+    >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'})
+    >>> print d.a, d.b, d[3]
+    1 True x
   """
   def __init__(self, dictionary=None, recursive=True):
     """
@@ -36,12 +37,12 @@ class DictionaryObject(object):
     the value out of the dictionary.
 
     Example:
-      d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
-      d.keys ==> Will return DictionaryObject.keys() method
-      d.values ==> Will return DictionaryObject.values() method
-      d.x ==> Will return value 1
-      d['keys'] ==> Will return value [1,2]
-      d['values'] ==> Will return value 3.
+      >>> d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
+      >>> d.keys ==> Will return DictionaryObject.keys() method
+      >>> d.values ==> Will return DictionaryObject.values() method
+      >>> d.x ==> Will return value 1
+      >>> d['keys'] ==> Will return value [1,2]
+      >>> d['values'] ==> Will return value 3.
     """
     if name in self.__dict__:
       return self.__dict__[name]
