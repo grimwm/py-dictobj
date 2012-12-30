@@ -6,11 +6,36 @@ class TestDictionaryObject(unittest.TestCase):
   def setUp(self):
     self.vanilla = DictionaryObject((('a',1),('b',2)))
     self.kinky = DictionaryObject({'a':1, 'b':{'c':True, 'd':[1,2]}, 1:'x'})
-    self.wowza = DictionaryObject({'a':1, 'b':2}, dictionary={'c':3})
-    print self.wowza
+    self.default = DictionaryObject((), None, a=3)
+    self.mutable = MutableDictionaryObject(a=3, b=4)
+    self.mutableDefault = MutableDictionaryObject((), None, b=4)
 
   def test_len(self):
     self.assertEqual(3, len(self.kinky))
+
+  def test_default(self):
+    self.assertEqual(self.default.a, 3)
+    self.assertEqual(self.default.b, None)
+
+    self.assertEqual(self.mutableDefault.a, None)
+    self.assertEqual(self.mutableDefault.b, 4)
+
+  def test_mutable(self):
+    self.assertEqual(self.mutable.a, 3)
+    self.assertEqual(self.mutable.b, 4)
+
+    self.mutable.c = 5
+    self.assertEqual(self.mutable.c, 5)
+    
+    self.assertRaises(AttributeError, getattr, self.mutable, 'd')
+
+  def test_mutable_default(self):
+    self.assertEqual(self.mutableDefault.b, 4)
+    
+    self.mutableDefault.c = 5
+    self.assertEqual(self.mutableDefault.c, 5)
+
+    self.assertEqual(self.mutableDefault.a, None)
     
   def test_iter(self):
     keys = [1,'a','b']

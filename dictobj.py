@@ -30,35 +30,22 @@ class DictionaryObject(object):
     >>> print d.a, d.b, d.c, d.d
     1 True None None
   """
-  def __init__(self, *args, **kwargs):
+  def __init__(self, contents=(), *args, **kwargs):
     """
     Take as input a dictionary-like object and return a DictionaryObject.
-    If recursive is True, then make sure any keys containing dictionaries
-    are also converted to DictionaryObjects.  Otherwise, leave them as vanilla
-    Python dictionaries.
+    It also makes sure any keys containing dictionaries are also converted
+    to DictionaryObjects.
     """
     super(DictionaryObject, self).__init__()
+    self.__dict__['_items'] = dict(contents, **kwargs)
 
-    if len(args) > 2:
-      raise TypeError("expected at most 2 argument, got %d" % len(args))
+    if args:
+      self.__dict__['_defaultValue'] = args[0]
+    self.__dict__['_defaultIsSet'] = len(args) > 0
 
-    dictionary = dict(args[0]) if len(args) > 0 else {}
-    if 2 == len(args):
-      self.__dict__['_defaultValue'] = args[1]
-    self.__dict__['_defaultIsSet'] = 2 == len(args)
-
-    if len(kwargs) > 0:
-      if len(args) > 0:
-        raise TypeError('Cannot mix args and kwargs.')
-      dictionary = dict(kwargs)
-    
-    items = {}
-    for k in dictionary:
-      items[k] = dictionary[k]
-    for k in items:
-      if isinstance(items[k], dict): 
-        items[k] = DictionaryObject(items[k])
-    self.__dict__['_items'] = items
+    for k in self._items:
+      if isinstance(self._items[k], dict): 
+        self._items[k] = DictionaryObject(self._items[k])
 
   def __getattr__(self, name):
     """
@@ -75,8 +62,6 @@ class DictionaryObject(object):
       >>> d['keys'] ==> Will return value [1,2]
       >>> d['values'] ==> Will return value 3.
     """
-    if name in self.__dict__:
-      return self.__dict__[name]
     if name in self._items:
       return self._items[name]
     if self._defaultIsSet:
@@ -127,9 +112,6 @@ class MutableDictionaryObject(DictionaryObject):
     >>> print d.a, d.b, d.c, d.d
     None True 3 None
   """
-  def __init__(self, *args, **kwargs):
-    super(MutableDictionaryObject, self).__init__(*args, **kwargs)
-
   def __setattr__(self, name, value):
     self._items[name] = value
 
