@@ -8,25 +8,42 @@ class DictionaryObject(object):
     >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'})
     >>> print d.a, d.b, d[3]
     1 True x
+    
+    >>> d = DictionaryObject((('a',1),('b',2)))
+    >>> print d.a, d.b
+    1 2
+    
+    >>> d = DictionaryObject(a=1, b=True)
+    >>> print d
+    {'a':1, b=True}
   """
-  def __init__(self, dictionary=None, recursive=True):
+  def __init__(self, *args, **kwargs):
     """
     Take as input a dictionary-like object and return a DictionaryObject.
     If recursive is True, then make sure any keys containing dictionaries
     are also converted to DictionaryObjects.  Otherwise, leave them as vanilla
     Python dictionaries.
     """
-    if recursive:
-      items = {}
-      for k in dictionary:
-        items[k] = dictionary[k]
-      for k in items:
-        if isinstance(items[k], dict): 
-          items[k] = DictionaryObject(items[k], recursive)
-      self.__dict__['_items'] = items
-    else: 
-      self.__dict__['_items'] = dictionary
-  
+    super(DictionaryObject, self).__init__()
+
+    if len(args) > 1:
+      raise TypeError("expected at most 1 argument, got %d" % len(args))
+
+    dictionary = dict(args[0]) if 1 == len(args) else {}
+
+    if len(kwargs) > 0:
+      if len(args) > 0:
+        raise TypeError('Cannot mix args and kwargs.')
+      dictionary = dict(kwargs)
+    
+    items = {}
+    for k in dictionary:
+      items[k] = dictionary[k]
+    for k in items:
+      if isinstance(items[k], dict): 
+        items[k] = DictionaryObject(items[k])
+    self.__dict__['_items'] = items
+
   def __getattr__(self, name):
     """
     This is the method that makes all the magic happen.  Obviously, for
@@ -46,10 +63,10 @@ class DictionaryObject(object):
       return self.__dict__[name]
     if name in self._items:
       return self._items[name]
-    raise AttributeError("'dict' object has no attribute '%s'" % name)
+    raise AttributeError("'%s' object has no attribute '%s'" % (__name__, name))
 
   def __setattr__(self, name, value):
-    raise AttributeError("'dict' object has no attribute '%s'" % name)
+    raise AttributeError("'%s' object does not support assignment" % __name__)
 
   def __getitem__(self, name):
     return self._items[name]
