@@ -8,10 +8,8 @@ for the fact it is itself immutable, but it also has the added feature of
 being able to lookup values by using keys as attributes.
 
 Example:
-  > &gt;&gt;&gt; d = DictionaryObject({'a':1, 'b':True, 3:'x'})
-  
-  > &gt;&gt;&gt; print d.a, d.b, d[3]
-  
+  > &gt;&gt;&gt; d = DictionaryObject({'a':1, 'b':True, 3:'x'}) <br>
+  > &gt;&gt;&gt; print d.a, d.b, d[3] <br>
   > 1 True x
 
   
