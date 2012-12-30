@@ -100,7 +100,7 @@ class DictionaryObject(object):
 
 class MutableDictionaryObject(DictionaryObject):
   """
-  Slight enhancement of the DictionaryObject allowing one to add class
+  Slight enhancement of the DictionaryObject allowing one to add
   attributes easily, in cases where that functionality is wanted.
 
   Examples:
