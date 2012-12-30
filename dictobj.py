@@ -1,8 +1,17 @@
 class DictionaryObject(object):
   """
   A class that has all the functionality of a normal Python dictionary, except
-  for the fact it is itself immutable, but it also has the added feature of
+  for the fact it is itself immutable.  It also has the added feature of
   being able to lookup values by using keys as attributes.
+
+  The reason for the class being immutable by default is to help make it a
+  little easier to use in multiprocessing situations.  Granted, the underlying
+  values themselves are not deeply copied, but the aim is to enforce some
+  ensurances of immutability on the container class.
+
+  When using positional arguments, the first argument must always be something
+  that would be a valid argument for a dict().  However, a second, optional
+  argument may be passed to create a default value when keys are not found.
   
   Example:
     >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'})
@@ -16,6 +25,10 @@ class DictionaryObject(object):
     >>> d = DictionaryObject(a=1, b=True)
     >>> print d
     {'a':1, b=True}
+
+    >>> d = DictionaryObject({'a':1, 'b':True}, None)
+    >>> print d.a, d.b, d.c, d.d
+    1 True None None
   """
   def __init__(self, *args, **kwargs):
     """
@@ -26,10 +39,13 @@ class DictionaryObject(object):
     """
     super(DictionaryObject, self).__init__()
 
-    if len(args) > 1:
-      raise TypeError("expected at most 1 argument, got %d" % len(args))
+    if len(args) > 2:
+      raise TypeError("expected at most 2 argument, got %d" % len(args))
 
-    dictionary = dict(args[0]) if 1 == len(args) else {}
+    dictionary = dict(args[0]) if len(args) > 0 else {}
+    if 2 == len(args):
+      self.__dict__['_defaultValue'] = args[1]
+    self.__dict__['_defaultIsSet'] = 2 == len(args)
 
     if len(kwargs) > 0:
       if len(args) > 0:
@@ -63,6 +79,8 @@ class DictionaryObject(object):
       return self.__dict__[name]
     if name in self._items:
       return self._items[name]
+    if self._defaultIsSet:
+      return self._defaultValue
     raise AttributeError("'%s' object has no attribute '%s'" % (__name__, name))
 
   def __setattr__(self, name, value):
@@ -94,3 +112,20 @@ class DictionaryObject(object):
     
   def values(self):
     return self._items.values()
+
+class MutableDictionaryObject(DictionaryObject):
+  """
+  Slight enhancement of the DictionaryObject allowing one to add class
+  attributes easily, in cases where that functionality is wanted.
+  """
+  def __init__(self, *args, **kwargs):
+    super(MutableDictionaryObject, self).__init__(*args, **kwargs)
+
+  def __setattr__(self, name, value):
+    self._items[name] = value
+
+  def __delattr__(self, name):
+    del self._items[name]
+
+  def __delitem__(self, name):
+    del self._items[name]
