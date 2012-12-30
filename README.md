@@ -11,17 +11,11 @@ Example:
   > &gt;&gt;&gt; d = DictionaryObject({'a':1, 'b':True, 3:'x'}) <br>
   > &gt;&gt;&gt; print d.a, d.b, d[3] <br>
   > 1 True x
-
   
-  > &gt;&gt;&gt; d = DictionaryObject((('a',1),('b',2)))
-  
-  > &gt;&gt;&gt; print d.a, d.b
-  
+  > &gt;&gt;&gt; d = DictionaryObject((('a',1),('b',2))) <br>
+  > &gt;&gt;&gt; print d.a, d.b <br>
   > 1 2
 
-  
-  > &gt;&gt;&gt; d = DictionaryObject(a=1, b=True)
-  
-  > &gt;&gt;&gt; print d
-  
+  > &gt;&gt;&gt; d = DictionaryObject(a=1, b=True) <br>
+  > &gt;&gt;&gt; print d <br>
   > {'a':1, b=True}
