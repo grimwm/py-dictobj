@@ -13,7 +13,7 @@ class DictionaryObject(object):
   that would be a valid argument for a dict().  However, a second, optional
   argument may be passed to create a default value when keys are not found.
   
-  Example:
+  Examples:
     >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'})
     >>> print d.a, d.b, d[3]
     1 True x
@@ -117,6 +117,15 @@ class MutableDictionaryObject(DictionaryObject):
   """
   Slight enhancement of the DictionaryObject allowing one to add class
   attributes easily, in cases where that functionality is wanted.
+
+  Examples:
+    >>> d = MutableDictionaryObject({'a':1, 'b':True}, None)
+    >>> print d.a, d.b, d.c, d.d
+    1 True None None
+    >>> d.c = 3
+    >>> del d.a
+    >>> print d.a, d.b, d.c, d.d
+    None True 3 None
   """
   def __init__(self, *args, **kwargs):
     super(MutableDictionaryObject, self).__init__(*args, **kwargs)
