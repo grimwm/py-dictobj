@@ -1,11 +1,15 @@
 py-dictobj
 ==========
 
-An immutable Python dictionary object where keys can be access as class attributes.
+A set of Python dictionary objects where keys can be access as class attributes.
+these classes have all the functionality of a normal Python dictionary, except
+in the case of the DictionaryObject, which is itself immutable.  In addition,
+these classes also have the added feature of being able to lookup values by
+using keys as attributes.
 
-A class that has all the functionality of a normal Python dictionary, except
-for the fact it is itself immutable, but it also has the added feature of
-being able to lookup values by using keys as attributes.
+DictionaryObject is an immutable version of these dictionary objects, while, of
+course, MutableDictionaryObject is the mutable version.  Use whichever one
+seems more appropriate for your use case.
 
 Examples:
   > &gt;&gt;&gt; d = DictionaryObject({'a':1, 'b':True, 3:'x'}) <br>
