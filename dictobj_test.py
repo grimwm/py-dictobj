@@ -10,6 +10,13 @@ class TestDictionaryObject(unittest.TestCase):
     self.mutable = MutableDictionaryObject(a=3, b=4)
     self.mutableDefault = MutableDictionaryObject((), None, b=4)
 
+  def test_copy(self):
+    x = MutableDictionaryObject(self.vanilla)
+    self.assertEqual(x, self.vanilla)
+
+    x.a = 2
+    self.assertNotEqual(x, self.vanilla)
+    
   def test_len(self):
     self.assertEqual(3, len(self.kinky))
 
