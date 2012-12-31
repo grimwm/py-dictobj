@@ -1,6 +1,6 @@
-import unittest
-
 from dictobj import *
+
+import unittest
 
 class TestDictionaryObject(unittest.TestCase):
   def setUp(self):
@@ -61,4 +61,5 @@ class TestDictionaryObject(unittest.TestCase):
   def test_exception(self):
     self.assertRaises(AttributeError, setattr, self.kinky, 'c', 3)
 
-unittest.main()
+if '__main__' == __name__:
+  unittest.main()
