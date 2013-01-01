@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
   name='dictobj',
-  version='0.2.2',
+  version='0.2.3',
   author='William Grim',
   author_email='william@grimapps.com',
   url='https://github.com/grimwm/py-dictobj',
