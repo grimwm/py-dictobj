@@ -39,6 +39,10 @@ class DictionaryObject(object):
     to DictionaryObjects.
     """
     super(DictionaryObject, self).__init__()
+    if isinstance(contents, type(self)):
+      self.__dict__.update(pickle.loads(pickle.dumps(contents.__dict__)))
+      return
+
     self.__dict__['_items'] = dict(contents, **kwargs)
 
     if len(args) > 1:
@@ -52,6 +56,8 @@ class DictionaryObject(object):
       except:
         default = args[0]
       self.__dict__['_defaultValue'] = default
+    else:
+      self.__dict__['_defaultValue'] = None
     self.__dict__['_defaultIsSet'] = len(args) > 0
 
     for k in self._items:
@@ -111,7 +117,35 @@ class DictionaryObject(object):
     return "%s(%s)" % (type(self).__name__, params)
     
   def __cmp__(self, rhs):
-    return cmp(self._items, rhs._items)
+    if self < rhs:
+      return -1
+    if self > rhs:
+      return 1
+    return 0
+
+  def __eq__(self, rhs):
+    val = cmp(self._items, rhs._items)
+    if 0 == val:
+      if self._defaultIsSet:
+        if rhs._defaultIsSet:
+          return 0 == cmp(self._defaultValue, rhs._defaultValue)
+        else:
+          return False
+      elif rhs._defaultIsSet:
+        return False
+    return 0 == val
+
+  def __lt__(self, rhs):
+    val = cmp(self._items, rhs._items)
+    if -1 == val:
+      if self._defaultIsSet:
+        if rhs._defaultIsSet:
+          return -1 == cmp(self._defaultValue, rhs._defaultValue)
+        else:
+          return False
+      elif rhs._defaultIsSet:
+        return True
+    return -1 == val
 
   def keys(self):
     return self._items.keys()
@@ -134,7 +168,10 @@ class MutableDictionaryObject(DictionaryObject):
     None True 3 None
   """
   def __setattr__(self, name, value):
-    self._items[name] = value
+    if '__dict__' == name:
+      super(DictionaryObject, self).__setattr__(name, value)
+    else:
+      self._items[name] = value
 
   def __delattr__(self, name):
     del self._items[name]
