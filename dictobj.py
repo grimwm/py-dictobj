@@ -185,10 +185,7 @@ class MutableDictionaryObject(DictionaryObject):
     None True 3 None
   """
   def __setattr__(self, name, value):
-    if '__dict__' == name:
-      super(DictionaryObject, self).__setattr__(name, value)
-    else:
-      self._items[name] = value
+    self._items[name] = value
 
   def __delattr__(self, name):
     del self._items[name]
