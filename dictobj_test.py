@@ -11,7 +11,13 @@ class TestDictionaryObject(unittest.TestCase):
     self.mutableDefault = MutableDictionaryObject((), None, b=4)
 
   def test_pickle(self):
-    pass
+    default = pickle.loads(pickle.dumps(self.default))
+    self.assertEqual(default, self.default)
+
+    mutable = pickle.loads(pickle.dumps(self.mutable))
+    self.assertEqual(mutable, self.mutable)
+    mutable.a = 500
+    self.assertNotEqual(mutable, self.mutable)
   
   def test_copy(self):
     m = MutableDictionaryObject(self.default)
@@ -19,6 +25,7 @@ class TestDictionaryObject(unittest.TestCase):
 
     m.a = 2
     self.assertNotEqual(m, self.default)
+    self.assertLess(m, self.default)
     
   def test_len(self):
     self.assertEqual(3, len(self.kinky))
