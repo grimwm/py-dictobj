@@ -31,7 +31,24 @@ class DictionaryObject(object):
     >>> d = DictionaryObject({'a':1, 'b':True}, None)
     >>> print d.a, d.b, d.c, d.d
     1 True None None
-  """
+    
+    >>> d = DictionaryObject({'a':1}, None)
+    >>> m = MutableDictionaryObject(d)
+    >>> print d == m
+    True
+    >>> m.a = 0
+    >>> print d == m, d < m, d > m, d != m, d <= m, d >= m
+    False False True True False True
+  
+    >>> import pickle
+    >>> m1 = MutableDictionaryObject({'a':1}, None)
+    >>> m2 = pickle.loads(pickle.dumps(m1))
+    >>> print m1 == m2
+    True
+    >>> m1.a = 3
+    >>> print m1 == m2
+    False
+    """
   def __init__(self, contents=(), *args, **kwargs):
     """
     Take as input a dictionary-like object and return a DictionaryObject.
