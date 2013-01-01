@@ -126,13 +126,7 @@ class DictionaryObject(object):
   def __eq__(self, rhs):
     val = cmp(self._items, rhs._items)
     if 0 == val:
-      if self._defaultIsSet:
-        if rhs._defaultIsSet:
-          return 0 == cmp(self._defaultValue, rhs._defaultValue)
-        else:
-          return False
-      elif rhs._defaultIsSet:
-        return False
+      return 0 == cmp(self._defaultValue, rhs._defaultValue)
     return 0 == val
 
   def __ne__(self, rhs):
@@ -140,16 +134,8 @@ class DictionaryObject(object):
 
   def __lt__(self, rhs):
     val = cmp(self._items, rhs._items)
-    if -1 == val:
-      if self._defaultIsSet:
-        if rhs._defaultIsSet:
-          if self._defaultValue is None and rhs._defaultValue is None:
-            return True
-          return -1 == cmp(self._defaultValue, rhs._defaultValue)
-        else:
-          return False
-      elif rhs._defaultIsSet:
-        return True
+    if 0 == val:
+      return -1 == cmp(self._defaultValue, rhs._defaultValue)
     return -1 == val
 
   def __le__(self, rhs):
