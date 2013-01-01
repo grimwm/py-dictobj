@@ -39,7 +39,7 @@ class DictionaryObject(object):
     to DictionaryObjects.
     """
     super(DictionaryObject, self).__init__()
-    if isinstance(contents, type(self)):
+    if isinstance(contents, DictionaryObject):
       self.__dict__.update(pickle.loads(pickle.dumps(contents.__dict__)))
       return
 
@@ -135,6 +135,9 @@ class DictionaryObject(object):
         return False
     return 0 == val
 
+  def __ne__(self, rhs):
+    return not (self == rhs)
+
   def __lt__(self, rhs):
     val = cmp(self._items, rhs._items)
     if -1 == val:
@@ -146,6 +149,15 @@ class DictionaryObject(object):
       elif rhs._defaultIsSet:
         return True
     return -1 == val
+
+  def __le__(self, rhs):
+    return self < rhs or self == rhs
+
+  def __gt__(self, rhs):
+    return not (self <= rhs)
+
+  def __ge__(self, rhs):
+    return self > rhs or self == rhs
 
   def keys(self):
     return self._items.keys()
