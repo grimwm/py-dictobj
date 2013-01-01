@@ -1,3 +1,5 @@
+import pickle
+
 class DictionaryObject(object):
   """
   A class that has all the functionality of a normal Python dictionary, except
@@ -39,20 +41,35 @@ class DictionaryObject(object):
     super(DictionaryObject, self).__init__()
     self.__dict__['_items'] = dict(contents, **kwargs)
 
+    if len(args) > 1:
+      raise TypeError("too many arguments")
+
+    # If we have more than one argument passed in, use the second argument
+    # as a default value.
     if args:
-      self.__dict__['_defaultValue'] = args[0]
+      try:
+        default = type(self)(args[0])
+      except:
+        default = args[0]
+      self.__dict__['_defaultValue'] = default
     self.__dict__['_defaultIsSet'] = len(args) > 0
 
     for k in self._items:
       if isinstance(self._items[k], dict): 
-        self._items[k] = DictionaryObject(self._items[k])
+        self._items[k] = type(self)(self._items[k])
+
+  def __setstate__(self, dict):
+    self.__dict__.update(dict)
+
+  def __getstate__(self):
+    return self.__dict__.copy()
 
   def __getattr__(self, name):
     """
-    This is the method that makes all the magic happen.  Obviously, for
-    certain reasons, it makes sense for "keys" matching the same name
-    as our internal methods, we want to return the methods instead of
-    the value out of the dictionary.
+    This is the method that makes all the magic happen.  Search for
+    'name' in self._items and return the value if found.  If a default
+    value has been set and 'name' is not found in self._items, return it.
+    Otherwise raise an AttributeError.
 
     Example:
       >>> d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
@@ -66,10 +83,13 @@ class DictionaryObject(object):
       return self._items[name]
     if self._defaultIsSet:
       return self._defaultValue
-    raise AttributeError("'%s' object has no attribute '%s'" % (__name__, name))
+    raise AttributeError("'%s' object has no attribute '%s'" % (type(self).__name__, name))
 
   def __setattr__(self, name, value):
-    raise AttributeError("'%s' object does not support assignment" % __name__)
+    """
+    This class is immutable-by-default.  See MutableDictionaryObject.
+    """
+    raise AttributeError("'%s' object does not support assignment" % type(self).__name__)
 
   def __getitem__(self, name):
     return self._items[name]
@@ -84,11 +104,12 @@ class DictionaryObject(object):
     return iter(self._items)
       
   def __repr__(self):
-    return repr(self._items)
+    if self._defaultIsSet:
+      params = "%s, %s" % (repr(self._items), self._defaultValue)
+    else:
+      params = repr(self._items)
+    return "%s(%s)" % (type(self).__name__, params)
     
-  def __str__(self):
-    return str(self._items)
-
   def __cmp__(self, rhs):
     return cmp(self._items, rhs._items)
 
