@@ -143,6 +143,8 @@ class DictionaryObject(object):
     if -1 == val:
       if self._defaultIsSet:
         if rhs._defaultIsSet:
+          if self._defaultValue is None and rhs._defaultValue is None:
+            return True
           return -1 == cmp(self._defaultValue, rhs._defaultValue)
         else:
           return False
