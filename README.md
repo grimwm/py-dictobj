@@ -15,7 +15,7 @@ seems more appropriate for your use case.
 
 Care has been taken to make sure these classes are picklable so that they can be
 stored and passed around, especially in the case of multiprocessing.  Care has
-also been taken that the \_\_repr\_\_ of these classes can be eval()'d by the Python
+also been taken that the `__repr__` of these classes can be eval()'d by the Python
 interpretter.
 
 Examples
