@@ -23,9 +23,9 @@ Please help contribute to this project by going to the
 [GitHub Project Repository](https://github.com/grimwm/py-dictobj) and doing one
 of a few things:
 
-* send me pull requests through the github interface
-* point me directly to your git repo so I can pull changes
-* send bug reports and feature requests by filing them under the __Issues__ tab at the top
+ * send me pull requests through the github interface
+ * point me directly to your git repo so I can pull changes
+ * send bug reports and feature requests by filing them under the __Issues__ tab at the top
 
 Examples
 --------
