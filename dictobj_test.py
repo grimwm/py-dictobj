@@ -1,6 +1,8 @@
+import dictobj
 from dictobj import *
 
 import unittest
+import doctest
 
 class TestDictionaryObject(unittest.TestCase):
   def setUp(self):
@@ -70,6 +72,12 @@ class TestDictionaryObject(unittest.TestCase):
 
   def test_exception(self):
     self.assertRaises(AttributeError, setattr, self.kinky, 'c', 3)
+
+def load_tests(loader, tests, pattern):
+  suite = unittest.TestSuite()
+  suite.addTests(tests)
+  suite.addTest(doctest.DocTestSuite(dictobj))
+  return suite
 
 if '__main__' == __name__:
   unittest.main()
