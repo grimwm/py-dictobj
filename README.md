@@ -15,48 +15,49 @@ seems more appropriate for your use case.
 
 Care has been taken to make sure these classes are picklable so that they can be
 stored and passed around, especially in the case of multiprocessing.  Care has
-also been taken that the __repr__ of these classes can be eval()'d by the Python
+also been taken that the \_\_repr\_\_ of these classes can be eval()'d by the Python
 interpretter.
 
-Examples:
-  > &gt;&gt;&gt; d = DictionaryObject({'a':1, 'b':True, 3:'x'}) <br>
-  > &gt;&gt;&gt; print d.a, d.b, d[3] <br>
-  > 1 True x
+Examples
+--------
+    >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'}) <br>
+    >>> print d.a, d.b, d[3] <br>
+    1 True x
+    
+    >>> d = DictionaryObject((('a',1),('b',2))) <br>
+    >>> print d.a, d.b <br>
+    1 2
   
-  > &gt;&gt;&gt; d = DictionaryObject((('a',1),('b',2))) <br>
-  > &gt;&gt;&gt; print d.a, d.b <br>
-  > 1 2
-
-  > &gt;&gt;&gt; d = DictionaryObject(a=1, b=True) <br>
-  > &gt;&gt;&gt; print d <br>
-  > {'a':1, b=True}
-
-  > &gt;&gt;&gt; d = DictionaryObject({'a':1, 'b':True}, None) <br>
-  > &gt;&gt;&gt; print d.a, d.b, d.c, d.d <br>
-  > 1 True None None
+    >>> d = DictionaryObject(a=1, b=True) <br>
+    >>> print d <br>
+    {'a':1, b=True}
   
-  > &gt;&gt;&gt; d = MutableDictionaryObject({'a':1, 'b':True}, None) <br>
-  > &gt;&gt;&gt; print d.a, d.b, d.c, d.d <br>
-  > 1 True None None <br>
-  > &gt;&gt;&gt; d.c = 3 <br>
-  > &gt;&gt;&gt; del d.a <br>
-  > &gt;&gt;&gt; print d.a, d.b, d.c, d.d <br>
-  > None True 3 None
-
-  > &gt;&gt;&gt; d = DictionaryObject({'a':1}, None) <br>
-  > &gt;&gt;&gt; m = MutableDictionaryObject(d) <br>
-  > &gt;&gt;&gt; print d == m <br>
-  > True <br>
-  > &gt;&gt;&gt; m.a = 0 <br>
-  > &gt;&gt;&gt; print d == m, d &lt; m, d &gt; m, d != m, d &lt;= m, d &gt;= m <br>
-  > False False True True False True
-
-  > &gt;&gt;&gt; import pickle <br>
-  > &gt;&gt;&gt; m1 = MutableDictionaryObject({'a':1}, None) <br>
-  > &gt;&gt;&gt; m2 = pickle.loads(pickle.dumps(m1)) <br>
-  > &gt;&gt;&gt; print m1 == m2 <br>
-  > True <br>
-  > &gt;&gt;&gt; m1.a = 3 <br>
-  > &gt;&gt;&gt; print m1 == m2 <br>
-  > False
+    >>> d = DictionaryObject({'a':1, 'b':True}, None) <br>
+    >>> print d.a, d.b, d.c, d.d <br>
+    1 True None None
+    
+    >>> d = MutableDictionaryObject({'a':1, 'b':True}, None) <br>
+    >>> print d.a, d.b, d.c, d.d <br>
+    1 True None None <br>
+    >>> d.c = 3 <br>
+    >>> del d.a <br>
+    >>> print d.a, d.b, d.c, d.d <br>
+    None True 3 None
   
+    >>> d = DictionaryObject({'a':1}, None) <br>
+    >>> m = MutableDictionaryObject(d) <br>
+    >>> print d == m <br>
+    True <br>
+    >>> m.a = 0 <br>
+    >>> print d == m, d < m, d > m, d != m, d <= m, d >= m <br>
+    False False True True False True
+  
+    >>> import pickle <br>
+    >>> m1 = MutableDictionaryObject({'a':1}, None) <br>
+    >>> m2 = pickle.loads(pickle.dumps(m1)) <br>
+    >>> print m1 == m2 <br>
+    True <br>
+    >>> m1.a = 3 <br>
+    >>> print m1 == m2 <br>
+    False
+    
