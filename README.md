@@ -1,14 +1,6 @@
 py-dictobj
 ==========
 
-First, please help contribute to this project by going to the
-[GitHub Project Repository](https://github.com/grimwm/py-dictobj) and doing one
-of a few things:
-
-* send me pull requests through the github interface
-* point me directly to your git repo so I can pull changes
-* send bug reports and feature requests by filing them under the __Issues__ tab at the top
-
 A set of Python dictionary objects where keys can be accessed as instnace attributes.
 These classes have all the functionality of a normal Python dictionary, except
 in the case of the DictionaryObject, which is itself immutable.  In addition,
@@ -23,6 +15,17 @@ Care has been taken to make sure these classes are picklable so that they can be
 stored and passed around, especially in the case of multiprocessing.  Care has
 also been taken that the `__repr__` of these classes can be eval()'d by the Python
 interpretter.
+
+Contribute
+----------
+
+Please help contribute to this project by going to the
+[GitHub Project Repository](https://github.com/grimwm/py-dictobj) and doing one
+of a few things:
+
+* send me pull requests through the github interface
+* point me directly to your git repo so I can pull changes
+* send bug reports and feature requests by filing them under the __Issues__ tab at the top
 
 Examples
 --------
