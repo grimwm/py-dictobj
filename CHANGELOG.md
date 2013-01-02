@@ -1,5 +1,8 @@
+Changes
+=======
+
 v0.2.4
-======
+------
 * Properly formatted README.md and added some details about how
 to contribute to this project.
 * Added doctests to this project since the examples actually do
@@ -8,12 +11,12 @@ them, and added everything to the automated testing suite.
 * Changed CHANGELOG to CHANGELOG.md.
 
 v0.2.3
-======
+------
 * Adding the source code URL to the README so that it's easier
 for people to find and help contribute.
 
 v0.2.2
-======
+------
 * Changelog started and prior versions added to this file.
 * Removed some code from `MutableDictionaryObject.__setattr__`
 that is no longer needed now that `DictionaryObject.__init__`
@@ -21,12 +24,12 @@ properly handles initialization of `__dict__` when passed in a
 `DictionaryObject`.
 
 v0.2.1
-======
+------
 * Improved the thoroughness of the documentation.
 * Added a description for PyPi.
 
 v0.2
-====
+----
 * Fixed equality operators and the comparison method.
 * Fixed object copying when passing in another `DictionaryObject`.
 * Fixed handling of default values upon `__init__`.
@@ -42,5 +45,5 @@ our classes so they can later be eval'd.
 * Added more examples to the documentation.
 
 v0.1.1
-======
+------
 * First release.
