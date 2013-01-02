@@ -9,8 +9,8 @@ in the case of the DictionaryObject, which is itself immutable.  In addition,
 these classes also have the added feature of being able to lookup values by
 using keys as attributes.
 
-DictionaryObject is an immutable version of these dictionary objects, while, of
-course, MutableDictionaryObject is the mutable version.  Use whichever one
+`DictionaryObject` is an immutable version of these dictionary objects, while, of
+course, `MutableDictionaryObject` is the mutable version.  Use whichever one
 seems more appropriate for your use case.
 
 Care has been taken to make sure these classes are picklable so that they can be
