@@ -1,3 +1,14 @@
+v0.2.4
+======
+Properly formatted README.md and added some details about how
+to contribute to this project.
+
+Added doctests to this project since the examples actually do
+work as valid tests taht can be run.  Found some bugs, resolved
+them, and added everything to the automated testing suite.
+
+Changed CHANGELOG to CHANGELOG.md.
+
 v0.2.3
 ======
 Adding the source code URL to the README so that it's easier
