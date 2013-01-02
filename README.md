@@ -16,6 +16,14 @@ stored and passed around, especially in the case of multiprocessing.  Care has
 also been taken that the `__repr__` of these classes can be eval()'d by the Python
 interpretter.
 
+Installation
+------------
+
+If you have Python installed and wish to get the package directly from the
+[Python Package Index](http://pypi.python.org/pypi/dictobj), just run
+`pip install dictobj` from the command-line.  If you already have a prior
+version of `dictobj` installed, just run `pip install dictobj -U` instead.
+
 Contribute
 ----------
 
