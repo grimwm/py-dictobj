@@ -1,7 +1,13 @@
 py-dictobj
 ==========
 
-URL: https://github.com/grimwm/py-dictobj
+First, please help contribute to this project by going to the
+[GitHub Project Repository](https://github.com/grimwm/py-dictobj) and doing one
+of a few things:
+
+* send me pull requests through the github interface
+* point me directly to your git repo so I can pull changes
+* send bug reports and feature requests by filing them under the __Issues__ tab at the top
 
 A set of Python dictionary objects where keys can be accessed as instnace attributes.
 These classes have all the functionality of a normal Python dictionary, except
@@ -20,44 +26,47 @@ interpretter.
 
 Examples
 --------
-    >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'}) <br>
-    >>> print d.a, d.b, d[3] <br>
+    >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'})
+    >>> print d.a, d.b, d[3]
     1 True x
     
-    >>> d = DictionaryObject((('a',1),('b',2))) <br>
-    >>> print d.a, d.b <br>
+    >>> d = DictionaryObject((('a',1),('b',2)))
+    >>> print d.a, d.b
     1 2
-  
-    >>> d = DictionaryObject(a=1, b=True) <br>
-    >>> print d <br>
-    {'a':1, b=True}
-  
-    >>> d = DictionaryObject({'a':1, 'b':True}, None) <br>
-    >>> print d.a, d.b, d.c, d.d <br>
+    
+    >>> d = DictionaryObject(a=1, b=True)
+    >>> print d
+    DictionaryObject({'a': 1, 'b': True})
+
+    >>> d = DictionaryObject({'a':1, 'b':True}, None)
+    >>> print d.a, d.b, d.c, d.d
     1 True None None
     
-    >>> d = MutableDictionaryObject({'a':1, 'b':True}, None) <br>
-    >>> print d.a, d.b, d.c, d.d <br>
-    1 True None None <br>
-    >>> d.c = 3 <br>
-    >>> del d.a <br>
-    >>> print d.a, d.b, d.c, d.d <br>
-    None True 3 None
-  
-    >>> d = DictionaryObject({'a':1}, None) <br>
-    >>> m = MutableDictionaryObject(d) <br>
-    >>> print d == m <br>
-    True <br>
-    >>> m.a = 0 <br>
-    >>> print d == m, d < m, d > m, d != m, d <= m, d >= m <br>
+    >>> d = DictionaryObject({'a':1}, None)
+    >>> m = MutableDictionaryObject(d)
+    >>> print d == m
+    True
+    >>> m.a = 0
+    >>> print d == m, d < m, d > m, d != m, d <= m, d >= m
     False False True True False True
   
-    >>> import pickle <br>
-    >>> m1 = MutableDictionaryObject({'a':1}, None) <br>
-    >>> m2 = pickle.loads(pickle.dumps(m1)) <br>
-    >>> print m1 == m2 <br>
-    True <br>
-    >>> m1.a = 3 <br>
-    >>> print m1 == m2 <br>
+    >>> import pickle
+    >>> m1 = MutableDictionaryObject({'a':1}, None)
+    >>> m2 = pickle.loads(pickle.dumps(m1))
+    >>> print m1 == m2
+    True
+    >>> m1.a = 3
+    >>> print m1 == m2
     False
-    
+
+    >>> d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
+    >>> d.keys
+    <bound method DictionaryObject.keys of DictionaryObject({'keys': [1, 2], 'x': 1, 'values': 3})>
+    >>> d.values
+    <bound method DictionaryObject.values of DictionaryObject({'keys': [1, 2], 'x': 1, 'values': 3})>
+    >>> d.x
+    1
+    >>> d['keys']
+    [1, 2]
+    >>> d['values']
+    3
