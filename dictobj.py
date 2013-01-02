@@ -26,7 +26,7 @@ class DictionaryObject(object):
     
     >>> d = DictionaryObject(a=1, b=True)
     >>> print d
-    {'a':1, b=True}
+    DictionaryObject({'a': 1, 'b': True})
 
     >>> d = DictionaryObject({'a':1, 'b':True}, None)
     >>> print d.a, d.b, d.c, d.d
@@ -96,11 +96,16 @@ class DictionaryObject(object):
 
     Example:
       >>> d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
-      >>> d.keys ==> Will return DictionaryObject.keys() method
-      >>> d.values ==> Will return DictionaryObject.values() method
-      >>> d.x ==> Will return value 1
-      >>> d['keys'] ==> Will return value [1,2]
-      >>> d['values'] ==> Will return value 3.
+      >>> d.keys
+      <bound method DictionaryObject.keys of DictionaryObject({'keys': [1, 2], 'x': 1, 'values': 3})>
+      >>> d.values
+      <bound method DictionaryObject.values of DictionaryObject({'keys': [1, 2], 'x': 1, 'values': 3})>
+      >>> d.x
+      1
+      >>> d['keys']
+      [1, 2]
+      >>> d['values']
+      3
     """
     if name in self._items:
       return self._items[name]
