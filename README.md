@@ -22,7 +22,7 @@ Installation
 If you have Python installed and wish to get the package directly from the
 [Python Package Index](http://pypi.python.org/pypi/dictobj), just run
 `pip install dictobj` from the command-line.  If you already have a prior
-version of `dictobj` installed, just run `pip install dictobj -U` instead.
+version installed, just run `pip install dictobj -U` instead.
 
 Contribute
 ----------
