@@ -1,16 +1,32 @@
 py-dictobj
 ==========
 
+Summary
+-------
 A set of Python dictionary objects where keys can be accessed as instance attributes.
-These classes have all the functionality of a normal Python dictionary, except
-in the case of the `DictionaryObject`, which is itself immutable.  In addition,
-these classes also have the added feature of being able to lookup values by
+
+Introduction
+------------
+This package extends the functionality of the normal Python dictionary by affording the
+ability to lookup dictionary values by attribute name (i.e. `__getattr__`)
+instead of item name (i.e. `__getitem__`).  However, normal Python syntax rules apply
+to naming, and so keys that would not be valid Python syntax must still be looked up using
+`__getitem__`.
+
+<!---
+The base `DictionaryObject` does not provide
+a `__setattr__` or `__setitem__`, whereas the child `MutableDictionaryObject` does.
+
+In addition to providing new ways of looking up data, the 
+
+In addition, these classes also have the added feature of being able to lookup values by
 using keys as attributes and can take an option second parameter to return a default
 value if a key lookup fails.  If you're looking for a mutable version of the
 `DictionaryObject`, use `MutableDictionaryObject`.
 
 Use whichever one
 seems more appropriate for your use case.
+--->
 
 Care has been taken to make sure these classes are picklable so that they can be
 stored and passed around, especially in the case of multiprocessing.  Care has
