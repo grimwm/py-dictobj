@@ -1,7 +1,7 @@
 py-dictobj
 ==========
 
-A set of Python dictionary objects where keys can be accessed as instnace attributes.
+A set of Python dictionary objects where keys can be accessed as instance attributes.
 These classes have all the functionality of a normal Python dictionary, except
 in the case of the DictionaryObject, which is itself immutable.  In addition,
 these classes also have the added feature of being able to lookup values by
