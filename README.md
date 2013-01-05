@@ -35,7 +35,9 @@ If your use-case requires a more liberal `DictionaryObject` with _mutability_, p
 `MutableDictionaryObject`.  It behaves the same, but you can add keys via `__setattr__`
 or `__setitem__` (e.g. `d.x = 5` or `d['x'] = 5`).
 
+
 <a name="mutability"></a>
+
 Immutable-by-Default
 --------------------
 
