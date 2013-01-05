@@ -1,4 +1,10 @@
 from setuptools import setup
+import markdown2
+
+def markdown(filename):
+  md = markdown2.Markdown()
+  with open(filename) as fin:
+    return md.convert(fin.read())
 
 setup(
   name='dictobj',
@@ -14,6 +20,7 @@ setup(
     'Topic :: Software Development :: Libraries :: Python Modules',
     ],
   description='A set of Python dictionary objects where keys can be accessed as instnace attributes.',
+  long_description=markdown('README.md'),
   py_modules=['dictobj'],
   test_suite='dictobj_test'
   )
