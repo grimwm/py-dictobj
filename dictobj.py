@@ -48,6 +48,11 @@ class DictionaryObject(object):
     >>> m1.a = 3
     >>> print m1 == m2
     False
+    >>> m1.a == 3
+    True
+    >>> m1['c'] = 5
+    >>> m1['c']
+    5
     """
   def __init__(self, contents=(), *args, **kwargs):
     """
