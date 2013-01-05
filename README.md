@@ -15,16 +15,16 @@ There are two primary classes of interest: `DictionaryObject` and `MutableDictio
 `DictionaryObject` is the base class, and it acts as an immutable dictionary.
 `MutableDictionaryObject`, as the name implies, provides the ability to mutate the object via
 `__setattr__` (e.g. `d.x = 500`) and `__setitem__` (e.g. `d['x'] = 500`).  For a description
-on the design considerations behind this choice, please see [Mutable vs. Immutable](#mutability).
+on the design considerations behind this choice, please see [Immutable-by-Default](#mutability).
 
 Care has been taken to make sure these classes are picklable so that they can be
 stored and passed around, especially in the case of multiprocessing.  Care has
 also been taken that the `__repr__` of these classes can be eval()'d by the Python
 interpretter.
 
-<a name="mutability"></a>
 Mutable vs Immutable
 --------------------
+
 The base `DictionaryObject` class is itself __immutable__, meaning that once the data is
 set during the call to `DictionaryObject.__init__`, no other keys may be added, nor
 may any existing keys have their values changed.  One caveat to this is that if the
@@ -35,18 +35,19 @@ If your use-case requires a more liberal `DictionaryObject` with _mutability_, p
 `MutableDictionaryObject`.  It behaves the same, but you can add keys via `__setattr__`
 or `__setitem__` (e.g. `d.x = 5` or `d['x'] = 5`).
 
+<a name="mutability"></a>
 Immutable-by-Default
 --------------------
 
 The base `DictionaryObject` was created as __immutable-by-default__ in order to facilitate
-[Separation of Concerns](http://trese.cs.utwente.nl/Docs/workshops/adc2000/papers/Constantinides%20(2).pdf).
+[Separation of Concerns](http://en.wikipedia.org/wiki/Separation_of_concerns)
 By doing my best to ensure the top-level object is itself immutable, developers are more free
 to consider an object instance as _static values_.  This allows them to make better assumptions,
 such as the fact they cannot change any values and indirectly interfere with the processing of the
 same data on another thread or process.
 
-In practice, Python itself does not seem to support a model of strong assurances in this regard.  So,
-the programmer must still be careful; however, this should help.
+In practice, Python itself does support a model of strong assurances with regard to immutability.  So,
+the programmer must still be careful; however, this package should help.
 
 Installation
 ------------
