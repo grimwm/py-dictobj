@@ -1,6 +1,10 @@
 Changes
 =======
 
+v0.2.5
+------
+* Added `__setitem__` to `MutableDictionaryObject`.
+
 v0.2.4
 ------
 * Properly formatted README.md and added some details about how
