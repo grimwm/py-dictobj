@@ -1,38 +1,28 @@
 py-dictobj
 ==========
 
-Summary
--------
-A set of Python dictionary objects where keys can be accessed as instance attributes.
-
-Introduction
-------------
 This package extends the functionality of the normal Python dictionary by affording the
-ability to lookup dictionary values by attribute name (i.e. `__getattr__`)
-instead of item name (i.e. `__getitem__`).  However, normal Python syntax rules apply
-to naming, and so keys that would not be valid Python syntax must still be looked up using
-`__getitem__`.
+ability to lookup dictionary keys as instance attributes (i.e. `__getattr__`)
+instead of "indices" (i.e. `__getitem__`).  Two caveats remain, however, prevent
+the use of `__getattr__` in certain circumstances.  In these cases, access the
+`DictionaryObject` using `__getitem__` (e.g. `d['3x&']`).  These cases are
 
-<!---
-The base `DictionaryObject` does not provide
-a `__setattr__` or `__setitem__`, whereas the child `MutableDictionaryObject` does.
+ 1. Names that do not follow the valid conventions for Normal Python syntax
+ 2. Names that match class attributes of the `DictionaryObject` class hierarchy
+    (e.g. `d.keys` will return the method, not the value, assuming `d['keys']` exists).
 
-In addition to providing new ways of looking up data, the 
-
-In addition, these classes also have the added feature of being able to lookup values by
-using keys as attributes and can take an option second parameter to return a default
-value if a key lookup fails.  If you're looking for a mutable version of the
-`DictionaryObject`, use `MutableDictionaryObject`.
-
-Use whichever one
-seems more appropriate for your use case.
---->
+There are two primary classes of interest: `DictionaryObject` and `MutableDictionaryObject`.
+`DictionaryObject` is the base class, and it acts as an immutable dictionary.
+`MutableDictionaryObject`, as the name implies, provides the ability to mutate the object via
+`__setattr__` (e.g. `d.x = 500`) and `__setitem__` (e.g. `d['x'] = 500`).  For a description
+on the design considerations behind this choice, please see [Mutable vs. Immutable](#mutability).
 
 Care has been taken to make sure these classes are picklable so that they can be
 stored and passed around, especially in the case of multiprocessing.  Care has
 also been taken that the `__repr__` of these classes can be eval()'d by the Python
 interpretter.
 
+<a name="mutability"></a>
 Mutable vs Immutable
 --------------------
 The base `DictionaryObject` class is itself __immutable__, meaning that once the data is
