@@ -194,6 +194,7 @@ class MutableDictionaryObject(DictionaryObject):
 
   def __delattr__(self, name):
     del self._items[name]
-
-  def __delitem__(self, name):
-    del self._items[name]
+    
+  __setitem__ = __setattr__
+  __delitem__ = __delattr__
+  
