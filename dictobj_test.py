@@ -72,6 +72,13 @@ class TestDictionaryObject(unittest.TestCase):
   def test_exception(self):
     self.assertRaises(AttributeError, setattr, self.kinky, 'c', 3)
 
+  def test_setitem(self):
+    self.mutable.x = 500
+    self.assertEqual(self.mutable.x, 500)
+
+    self.mutable['y'] = 100
+    self.assertEqual(self.mutable.y, 100)
+
 def load_tests(loader, tests, pattern):
   import dictobj
   suite = unittest.TestSuite()
