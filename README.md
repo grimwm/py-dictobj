@@ -116,3 +116,11 @@ Examples
     [1, 2]
     >>> d['values']
     3
+    
+    >>> import dictobj
+    >>> d = {'a':1, 'b':2}
+    >>> dictobj.DictionaryObject(d).asdict() == d
+    True
+    >>> d['c'] = {1:2, 3:4}
+    >>> dictobj.DictionaryObject(d).asdict() == d
+    True
