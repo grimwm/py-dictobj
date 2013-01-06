@@ -83,7 +83,7 @@ class DictionaryObject(object):
     self.__dict__['_defaultIsSet'] = len(args) > 0
 
     for k in self._items:
-      if isinstance(self._items[k], dict): 
+      if isinstance(self._items[k], dict):
         self._items[k] = type(self)(self._items[k])
 
   def __setstate__(self, dict):
@@ -179,6 +179,17 @@ class DictionaryObject(object):
     
   def values(self):
     return self._items.values()
+
+  def asdict(self):
+    # Copy the data back out of here and into a dict.  Then return it.
+    items = {}
+    for name in self._items:
+      value = self._items[name]
+      if isinstance(value, DictionaryObject):
+        items[name] = value.asdict()
+      else:
+        items[name] = value
+    return items
 
 class MutableDictionaryObject(DictionaryObject):
   """
