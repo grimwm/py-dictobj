@@ -1,6 +1,16 @@
 Changes
 =======
 
+v0.3
+----
+* Added `DictionaryObject.asdict()` to return a copy of the internal
+  data as a `dict`, because some external libraries may require one
+  and won't accept a `DictionaryObject`.
+* Added another test to some older doctest code to make sure
+  `MutableDictionaryObject.__setitem__` works correctly.
+* Improved release.sh a little bit for generating pypi packages / docs.
+* Upgrading development status to "Production/Stable".
+
 v0.2.5
 ------
 * Added `__setitem__` to `MutableDictionaryObject`.
