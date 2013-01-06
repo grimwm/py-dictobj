@@ -181,7 +181,20 @@ class DictionaryObject(object):
     return self._items.values()
 
   def asdict(self):
-    # Copy the data back out of here and into a dict.  Then return it.
+    """
+    Copy the data back out of here and into a dict.  Then return it.
+    Some libraries may check specifically for dict objects, such
+    as the json library; so, this makes it convenient to get the data
+    back out.
+
+    >>> import dictobj
+    >>> d = {'a':1, 'b':2}
+    >>> dictobj.DictionaryObject(d).asdict() == d
+    True
+    >>> d['c'] = {1:2, 3:4}
+    >>> dictobj.DictionaryObject(d).asdict() == d
+    True
+    """
     items = {}
     for name in self._items:
       value = self._items[name]
