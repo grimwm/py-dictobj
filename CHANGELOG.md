@@ -1,6 +1,10 @@
 Changes
 =======
 
+v0.3.1
+------
+* Fixing the setup.py script so it works on older versions of Python.
+
 v0.3
 ----
 * Added `DictionaryObject.asdict()` to return a copy of the internal
