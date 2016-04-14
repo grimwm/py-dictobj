@@ -26,7 +26,6 @@ class TestDictionaryObject(unittest.TestCase):
 
     m.a = 2
     self.assertNotEqual(m, self.default)
-    self.assertLess(m, self.default)
     
   def test_len(self):
     self.assertEqual(3, len(self.kinky))
@@ -56,9 +55,9 @@ class TestDictionaryObject(unittest.TestCase):
     self.assertEqual(self.mutableDefault.a, None)
     
   def test_iter(self):
-    keys = [1,'a','b']
-    for i,k in enumerate(sorted(self.kinky)):
-      self.assertEqual(k, keys[i])
+    keys = set([1,'a','b'])
+    for i,k in enumerate(self.kinky):
+      self.assertTrue(k in keys)
 
   def test_getattr(self):
     self.assertEqual(self.kinky.a, 1)

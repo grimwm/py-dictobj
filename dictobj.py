@@ -17,36 +17,43 @@ class DictionaryObject(object):
   
   Examples:
     >>> d = DictionaryObject({'a':1, 'b':True, 3:'x'})
-    >>> print d.a, d.b, d[3]
-    1 True x
+    >>> d.a == 1
+    True
+    >>> d.b
+    True
+    >>> d[3] == 'x'
+    True
     
     >>> d = DictionaryObject((('a',1),('b',2)))
-    >>> print d.a, d.b
-    1 2
+    >>> d.a == 1
+    True
+    >>> d.b == 2
+    True
     
-    >>> d = DictionaryObject(a=1, b=True)
-    >>> print d
-    DictionaryObject({'a': 1, 'b': True})
-
     >>> d = DictionaryObject({'a':1, 'b':True}, None)
-    >>> print d.a, d.b, d.c, d.d
-    1 True None None
+    >>> d.a == 1
+    True
+    >>> d.b
+    True
+    >>> d.c
     
     >>> d = DictionaryObject({'a':1}, None)
     >>> m = MutableDictionaryObject(d)
-    >>> print d == m
+    >>> d == m
     True
     >>> m.a = 0
-    >>> print d == m, d < m, d > m, d != m, d <= m, d >= m
-    False False True True False True
+    >>> d == m
+    False
+    >>> d != m
+    True
   
     >>> import pickle
     >>> m1 = MutableDictionaryObject({'a':1}, None)
     >>> m2 = pickle.loads(pickle.dumps(m1))
-    >>> print m1 == m2
+    >>> m1 == m2
     True
     >>> m1.a = 3
-    >>> print m1 == m2
+    >>> m1 == m2
     False
     >>> m1.a == 3
     True
@@ -101,10 +108,12 @@ class DictionaryObject(object):
 
     Example:
       >>> d = DictionaryObject({'keys':[1,2], 'values':3, 'x':1})
-      >>> d.keys
-      <bound method DictionaryObject.keys of DictionaryObject({'keys': [1, 2], 'x': 1, 'values': 3})>
-      >>> d.values
-      <bound method DictionaryObject.values of DictionaryObject({'keys': [1, 2], 'x': 1, 'values': 3})>
+      >>> sorted(list(d.keys())) == ['keys', 'values', 'x']
+      True
+      >>> [1, 2] in list(d.values())
+      True
+      >>> 1 in list(d.values())
+      True
       >>> d.x
       1
       >>> d['keys']
@@ -151,28 +160,12 @@ class DictionaryObject(object):
     return 0
 
   def __eq__(self, rhs):
-    val = cmp(self._items, rhs._items)
-    if 0 == val:
-      return 0 == cmp(self._defaultValue, rhs._defaultValue)
-    return 0 == val
+    if self._items == rhs._items:
+      return self._defaultValue == rhs._defaultValue
+    return False
 
   def __ne__(self, rhs):
     return not (self == rhs)
-
-  def __lt__(self, rhs):
-    val = cmp(self._items, rhs._items)
-    if 0 == val:
-      return -1 == cmp(self._defaultValue, rhs._defaultValue)
-    return -1 == val
-
-  def __le__(self, rhs):
-    return self < rhs or self == rhs
-
-  def __gt__(self, rhs):
-    return not (self <= rhs)
-
-  def __ge__(self, rhs):
-    return self > rhs or self == rhs
 
   def keys(self):
     return self._items.keys()
@@ -211,12 +204,20 @@ class MutableDictionaryObject(DictionaryObject):
 
   Examples:
     >>> d = MutableDictionaryObject({'a':1, 'b':True}, None)
-    >>> print d.a, d.b, d.c, d.d
-    1 True None None
+    >>> d.a == 1
+    True
+    >>> d.b == True
+    True
+    >>> d.c is None
+    True
+    >>> d.d is None
+    True
     >>> d.c = 3
     >>> del d.a
-    >>> print d.a, d.b, d.c, d.d
-    None True 3 None
+    >>> d.a is None
+    True
+    >>> d.c == 3
+    True
   """
   def __setattr__(self, name, value):
     self._items[name] = value
