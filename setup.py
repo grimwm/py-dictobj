@@ -14,7 +14,7 @@ def read(filename):
 
 setup(
   name='dictobj',
-  version='0.3.1',
+  version='0.4',
   author='William Grim',
   author_email='william@grimapps.com',
   url='https://github.com/grimwm/py-dictobj',

@@ -1,6 +1,12 @@
 Changes
 =======
 
+v0.4
+----
+* Support for Python 3 added.
+* Removed the capabilities for <, >, <=, and >= on the
+  `DictionaryObject` to get Python 3 support properly added.
+
 v0.3.1
 ------
 * Fixing the setup.py script so it works on older versions of Python.
